@@ -1,0 +1,101 @@
+.App {
+  text-align: center;
+  
+  background: rgb(252, 252, 252);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header{
+  padding: 10px 0px;
+  color: #333;
+  border-bottom: 1px solid rgb(229, 232, 235);
+  box-shadow: rgb(14 14 14 / 25%) 0px 0px 8px 0px;
+}
+
+.main{
+  display: flex;
+  width: 1240px;
+  margin: auto;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+label > input, label > select{
+  margin-top: 5px;
+  padding: 7px 15px;
+  border: 2px solid rgb(197, 197, 197);
+  border-radius: 3px;
+}
+
+.column {
+  width: 50%;
+  text-align: left;
+  padding: 25px 20px;
+  margin: 15px;
+}
+
+.nft-image{
+  width: 100%;
+}
+
+
+.column > form{
+  display: flex;
+  flex-direction: column;
+  padding: 25px 30px;
+  background: hsl(240deg 7% 97%);
+  color: #555;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.submitButton{
+  background: #fff;
+  color: #000;
+  font-size: 22px;
+  padding: 15px 20px;
+}
+
+.searchMeta{
+  padding: 20px;
+  background: #333;
+  color:#fff;
+}
