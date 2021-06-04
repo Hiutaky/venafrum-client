@@ -31,6 +31,18 @@
   }
 }
 
+li, .userInfo{ 
+  white-space: nowrap;
+  overflow-x: auto; 
+  overflow-y: hidden;
+  flex-wrap: inherit !important;
+  scrollbar-width: none; 
+}
+
+li::-webkit-scrollbar { /* now, let's remove the scroll-bar from the menu */
+  display: none; 
+}
+
 @media only screen and ( min-width: 361px){
   .main{
     display: flex;
