@@ -15,6 +15,36 @@
   }
 }
 
+@media only screen and ( max-width: 360px){
+  .main{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .column {
+    width: 100%;
+    text-align: left;
+  }
+  form{
+    padding: 10px;
+  }
+}
+
+@media only screen and ( min-width: 361px){
+  .main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .column {
+    width: 50%;
+    text-align: left;
+    padding: 25px 20px;
+    margin: 15px;
+  }
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -46,11 +76,7 @@
   box-shadow: rgb(14 14 14 / 25%) 0px 0px 8px 0px;
 }
 
-.main{
-  display: flex;
-  width: 1240px;
-  margin: auto;
-}
+
 
 label {
   display: flex;
@@ -63,13 +89,6 @@ label > input, label > select{
   padding: 7px 15px;
   border: 2px solid rgb(197, 197, 197);
   border-radius: 3px;
-}
-
-.column {
-  width: 50%;
-  text-align: left;
-  padding: 25px 20px;
-  margin: 15px;
 }
 
 .nft-image{
@@ -98,4 +117,16 @@ label > input, label > select{
   padding: 20px;
   background: #333;
   color:#fff;
+}
+
+ul.itemContainer {
+  list-style: none;
+  padding: 5px;
+}
+
+.itemContainer > li{
+  margin: 10px 0px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  background: hsl(240deg 7% 97%);
 }

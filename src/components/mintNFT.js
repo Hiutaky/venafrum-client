@@ -12,12 +12,12 @@ class MintNFT extends Component {
             NFTHash:null,
             imageHash: null,
             address: this.props.drizzleState.accounts[0],//default address = current user address
-            title: '',
-            description: '',
-            position: '',
-            age: '',
-            buffer:'',
-            isNFTMinted: false
+            title: null,
+            description: null,
+            position: null,
+            age: null,
+            isNFTMinted: false,
+            buffer: null,
         };
 
         this.MintNFT = this.MintNFT.bind(this);
@@ -82,7 +82,15 @@ class MintNFT extends Component {
         const imageHash = await path();
         state.imageHash = imageHash
 
-        const metaDataJSON = JSON.stringify( state )
+        const metaData = {
+            title: state.title,
+            description: state.decription,
+            age: state.age,
+            position: state.position,
+            imageHash: state.imageHash
+        }
+
+        const metaDataJSON = JSON.stringify( metaData )
 
         const jsonPath = async () => { 
             const { path } = await ipfs.add( metaDataJSON )//load image an retrieve the hashid
@@ -92,7 +100,6 @@ class MintNFT extends Component {
         const NFTHash = await jsonPath()
 
         this.setState( { NFTHash } )
-
         
         const stackId = contract.methods["mintOpera"].cacheSend(address, NFTHash, { //mint a new nft and assign as metauri the ipfs hashid
             from: userAddress

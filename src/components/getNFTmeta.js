@@ -8,6 +8,7 @@ class GetNFTMeta extends Component {
             address: this.props.drizzleState.accounts[0],
             tokenId: null,
             ipfsHash: null,
+            txHash: null,
             imageHash: null,
             age: null,
             description: '',
@@ -32,11 +33,11 @@ class GetNFTMeta extends Component {
     }
 
     prepareHash = async (tokenId, user, contract) => {
-        const ipfsHash = contract.methods["tokenURI"].cacheCall(tokenId, {
+        const txHash = contract.methods["tokenURI"].cacheCall(tokenId, {
             from: user
         });
 
-        return ipfsHash;
+        return txHash;
     }
 
     handleSearch = async event => {
@@ -48,14 +49,14 @@ class GetNFTMeta extends Component {
         const tokenId =  this.tokenId.current.value;
         const { NFTmint } = drizzleState.contracts;
 
-        const ipfsHash = await this.prepareHash(tokenId, user, contract);
+        const txHash = await this.prepareHash(tokenId, user, contract);
 
-        this.setState( { ipfsHash });
-
-        const lastipfsHash = await NFTmint.tokenURI[ipfsHash];
-
-        if( lastipfsHash && lastipfsHash.value){
-            fetch('https://ipfs.io/ipfs/' + lastipfsHash.value)
+        this.setState( { txHash });
+        console.log(txHash)
+        const ipfsHash = await NFTmint.tokenURI[txHash];
+        if( ipfsHash && ipfsHash.value){
+            this.setState( { ipfsHash: ipfsHash.value });
+            fetch('https://ipfs.io/ipfs/' + ipfsHash.value)
             .then(response => response.json())
             .then( (data) => {
                 this.setState( data )
@@ -67,15 +68,22 @@ class GetNFTMeta extends Component {
     printResult = () => {
         if( ! this.state.ipfsHash || ! this.state.title) return null;
 
+        const { drizzleState } = this.props;
+        const { NFTmint } = drizzleState.contracts;
         return(
-        <div className="itemContainer">
-            <div>IPFS Hash: {this.state.ipfsHash} </div>
-            <div>Name: {this.state.title}</div>
-            <div>Description: {this.state.description}</div>
-            <div>Position: {this.state.position}</div>
-            <div>Age: {this.state.age}</div>
-            <div>Image: <img className="nft-image" src={this.state.imageHash ? 'https://ipfs.io/ipfs/' + this.state.imageHash : ''}></img></div>
-        </div>
+            <ul className="itemContainer">
+            <li><h3>Name: {this.state.title}</h3></li>
+            <li>BSC Tx: {this.state.txHash}</li>
+            <li>IPFS Hash:  <a href={'https://ipfs.io/ipfs/' + this.state.ipfsHash } target="_blank">{this.state.ipfsHash}</a></li>
+            <li>Description: {this.state.description}</li>
+            <li>Position: {this.state.position}</li>
+            <li>Age: {this.state.age}</li>
+            <li>Image Hash: 
+                <div>
+                    <a href={'https://ipfs.io/ipfs/' + this.state.imageHash } target="_blank">{this.state.imageHash}</a>
+                </div> 
+                <img className="nft-image" src={this.state.imageHash ? 'https://ipfs.io/ipfs/' + this.state.imageHash : ''} ></img></li>
+        </ul>
         )
             
     }
@@ -83,13 +91,7 @@ class GetNFTMeta extends Component {
 
 
     render () {
-        const { drizzleState } = this.props;
-        const { NFTmint } = drizzleState.contracts;
-        const user = drizzleState.accounts[0];
-        
-        const ipfsHash = NFTmint.tokenURI[this.state.ipfsHash];
-        
-
+    
         //return <div>Current Token: { this.state.tokenId } MetaValue: { metaValue && metaValue.value }</div>
         return (
             <div className="column">
