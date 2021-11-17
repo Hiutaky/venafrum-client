@@ -17,8 +17,8 @@ class MintNFT extends Component {
             position: null,
             age: null,
             isNFTMinted: false,
-            buffer: null,
-        };
+            buffer: null
+        }
 
         this.MintNFT = this.MintNFT.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
@@ -52,14 +52,12 @@ class MintNFT extends Component {
         let reader = new window.FileReader()
         reader.readAsArrayBuffer(file)
         reader.onloadend = () => this.convertToBuffer(reader)    
-    };
+    }
 
     convertToBuffer = async(reader) => {
-      //file is converted to a buffer to prepare for uploading to IPFS
-        const buffer = await Buffer.from(reader.result);
-      //set this buffer -using es6 syntax
-        this.setState({buffer});
-    };
+        const buffer = await Buffer.from(reader.result)
+        this.setState({buffer})
+    }
 
 
     MintNFT = async(event) => {
@@ -71,7 +69,7 @@ class MintNFT extends Component {
         const state = this.state;
 
         const path = async () => { 
-            const { path } = await ipfs.add(state.buffer)//load image an retrieve the hashid
+            const { path } = await ipfs.add(state.buffer)
             return path
         }
 
@@ -82,6 +80,7 @@ class MintNFT extends Component {
         const imageHash = await path();
         state.imageHash = imageHash
 
+        //preparing metadata
         const metaData = {
             title: state.title,
             description: state.decription,
@@ -110,10 +109,6 @@ class MintNFT extends Component {
         })
 
         this.setState({stackId});
-        /*await ipfs.add(metaData, (err, ipfsHash) => {
-            console.log(err,ipfsHash);
-            this.setState( { ipfsHash: ipfsHash[0].hash } )
-        })*/
     }
 
     getTxStatus = () => {

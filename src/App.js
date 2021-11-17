@@ -34,8 +34,19 @@ class App extends Component {
     this.unsubscribe();
   }
 
+  printLoader() {
+
+    return(
+      <div>
+        Currently Loading Venafrum NFT...
+        <div>To access Venafrum, you must have installed Metamask or similar wallet. Plus you must setup <b>BSC Testnet</b></div>
+      </div>
+    )
+  }
+
   render() {
-    if (this.state.loading) return "Loading Venafrum NFT...";
+    
+    if ( this.state.loading ) return this.printLoader() //if (this.state.loading) return "Loading Venafrum NFT...";
     return (
       <div className="App">
         <div className="header">
